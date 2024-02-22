@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>smw</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.1/dist/missing.css">
+    <link rel="icon" type="image/svg+xml" href="/logo.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
+  </head>
+  <body>
+  <header class="navbar">
+    <span class="f-row">
+      <a class="brand" href="/" aria-label="Home">
+        <h1>smw</h1>
+      </a>
+    </span>
+  </header>
+  {- (args :content) -}
+  <footer>smw</footer>
+  </body>
+</html>
+
