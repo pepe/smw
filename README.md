@@ -1,3 +1,4 @@
-# smw
+# See My Work
 
-[ ] add information about the 
+Yet another presentation system writen in Janet and gp.
+
