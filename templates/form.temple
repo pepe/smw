@@ -1,6 +1,6 @@
 <main>
 	<form action="/" method="POST">
-		<textarea name="presentation"></textarea>
+		<textarea name="presentation">{- (args :content) -}</textarea>
 		<button>Save</button>
 	</form>
 </main>

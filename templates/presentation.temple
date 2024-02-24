@@ -1,5 +1,6 @@
+{$ (use /app/environment) $}
 <!DOCTYPE html>
-<html>
+<html class="presentation">
   <head>
     <title>smw</title>
     <meta charset="utf-8">
@@ -10,16 +11,16 @@
     <link rel="icon" type="image/png" href="/favicon.png">
   </head>
   <body>
-  <header class="navbar">
-    <span class="f-row">
-      <a class="brand" href="/" aria-label="Home">
-        <h1>smw</h1>
-      </a>
-    </span>
+  <header class="f-row align-items:baseline">
+    <a href="/">home</a>
+    <h1>{{ (get-in args [:presentation :title])}}</h1>
+    {- (http/page navigation args) -}
   </header>
-  {- (args :content) -}
-  <footer>smw</footer>
+  <main hx-get="/slide" hx-trigger="refresh from:body" class="f-col align-items:center justify-content:center">
+    {- (hg/html (get-in args [:presentation :chapters 0 :slides 0])) -}
+  </main>
   <script src="/htmx.min.js"></script>
   </body>
 </html>
+
 
