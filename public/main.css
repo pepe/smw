@@ -1,0 +1,8 @@
+:root {
+  --line-length: 60rem;
+}
+
+textarea {
+  width: 100%;
+  height: 60vh;
+}

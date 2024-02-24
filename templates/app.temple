@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.1/dist/missing.css">
+    <link rel="stylesheet" href="/main.css">
     <link rel="icon" type="image/svg+xml" href="/logo.svg">
     <link rel="icon" type="image/png" href="/favicon.png">
   </head>
