@@ -11,13 +11,13 @@
     <link rel="icon" type="image/png" href="/favicon.png">
   </head>
   <body>
-  <header class="f-row align-items:baseline">
+  <header class="f-row align-items:center">
     <a href="/">home</a>
     <h1>{{ (get-in args [:presentation :title])}}</h1>
     {- (http/page navigation args) -}
   </header>
   <main hx-get="/slide" hx-trigger="refresh from:body" class="f-col align-items:center justify-content:center">
-    {- (hg/html (get-in args [:presentation :chapters 0 :slides 0])) -}
+    {- (hg/html (args :slide-content)) -}
   </main>
   <script src="/htmx.min.js"></script>
   </body>

@@ -4,7 +4,7 @@
   <button hx-get="/next-slide" hx-swap="none" {- (if (args :disabled-next-slide) "disabled") -}>next slide</button>
   <button hx-get="/previous-chapter" hx-swap="none" {- (if (args :disabled-previous-chapter) "disabled") -}>previous chapter</button>
   <button hx-get="/next-chapter" hx-swap="none" {- (if (args :disabled-next-chapter) "disabled") -}>next chapter</button>
-  <span>chapter: {{ (inc (args :chapter)) }}</span>
+  <span>chapter: {{ (get-in args [:presentation :chapters (args :chapter) :title]) }}</span>
   <span>slide: {{ (inc (args :slide)) }}</span>
 </nav>
 

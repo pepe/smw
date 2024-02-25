@@ -61,11 +61,14 @@
           (request "POST" (url)
                    :headers {"Content-Type"
                              "application/x-www-form-urlencoded"}
-                   :body (slurp "./test/update-presentation-req"))))
+                   :body (slurp "./test/create-presentation-req"))))
+
+(assert ((redirect? "/presentation")
+          (request "GET" (url "/start"))))
 
 (assert ((success-has? "<html" "Backend CULS 2024" "previous-slide" "next-slide"
                        "Future Backend Development")
-          (request "GET" (url "/start"))))
+          (request "GET" (url "/presentation"))))
 
 (assert (success?
           (request "GET" (url "/next-slide"))))

@@ -61,12 +61,12 @@
 
 (define-event ^next-chapter
   "Moves chapter forward"
-  {:update (fn [_ {:view view}] (update view :chapter inc))
+  {:update (fn [_ {:view view}] (update view :chapter inc) (put view :slide 0))
    :watch ^refresh-view})
 
 (define-event ^previous-chapter
   "Moves chapter backward"
-  {:update (fn [_ {:view view}] (update view :chapter dec))
+  {:update (fn [_ {:view view}] (update view :chapter dec) (put view :slide 0))
    :watch ^refresh-view})
 
 # Transformations
@@ -108,8 +108,13 @@
 (defn /start
   "Start presentation"
   [&]
-  (define :view)
   (produce ^start)
+  (http/see-other "/presentation"))
+
+(defn /presentation
+  "Show presentation"
+  [&]
+  (define :view)
   (http/page presentation view))
 
 (defn /next-slide
@@ -158,7 +163,8 @@
   @{"/" (http/dispatch @{"GET" (http/html-get /index)
                          "POST" (http/urlencoded /save)})
     "/edit" (http/html-get /edit)
-    "/start" (http/html-get /start)
+    "/start" /start
+    "/presentation" (http/html-get /presentation)
     "/next-slide" /next-slide
     "/previous-slide" /previous-slide
     "/next-chapter" /next-chapter
