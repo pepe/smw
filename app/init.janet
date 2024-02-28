@@ -30,17 +30,24 @@
      :effect (fn [_ {:store store} _] (:flush store))}
     "save"))
 
-(define-update ^refresh-view
+(define-watch ^refresh-viewer
+  "Sends sse with the content of the slide."
+  [_ {:view view} _]
+  (notify :viewer))
+
+(define-event ^refresh-view
   "Refreshes view after change"
-  [_ {:view view}]
-  (let [chapter (view :chapter)
-        slide (view :slide)]
-    (merge-into view
-                {:slide-content ((=> :presentation :chapters chapter :slides slide) view)
-                 :disabled-next-slide (not ((=> :presentation :chapters chapter :slides (inc slide)) view))
-                 :disabled-previous-slide (zero? slide)
-                 :disabled-next-chapter (not ((=> :presentation :chapters (inc chapter)) view))
-                 :disabled-previous-chapter (zero? chapter)})))
+  {:update
+   (fn [_ {:view view}]
+     (let [chapter (view :chapter)
+           slide (view :slide)]
+       (merge-into view
+                   {:slide-content ((=> :presentation :chapters chapter :slides slide) view)
+                    :disabled-next-slide (not ((=> :presentation :chapters chapter :slides (inc slide)) view))
+                    :disabled-previous-slide (zero? slide)
+                    :disabled-next-chapter (not ((=> :presentation :chapters (inc chapter)) view))
+                    :disabled-previous-chapter (zero? chapter)})))
+   :watch ^refresh-viewer})
 
 (define-event ^start
   "Sets positions to start"
@@ -158,6 +165,26 @@
   (define :view)
   (http/page navigation view))
 
+(defn /viewer
+  "Show the current slide"
+  [&]
+  (define :view)
+  (http/page viewer view))
+
+(defn /viewer.sse
+  "SSE entry point for the viewer"
+  [&]
+  (let [chan (ev/chan 128)]
+    (produce (register-chan chan))
+    (http/stream
+     (forever
+       (try
+         (let [[type msg] (ev/take chan)] (http/event type msg))
+         ([e]
+          (ev/give-supervisor :close (dyn :conn))
+          (break))))
+     (produce (deregister-chan chan)))))
+
 # Configuration
 (def routes
   "Application routes"
@@ -171,7 +198,9 @@
     "/next-chapter" /next-chapter
     "/previous-chapter" /previous-chapter
     "/slide" (http/html-get /slide)
-    "/navigation" (http/html-get /navigation)})
+    "/navigation" (http/html-get /navigation)
+    "/viewer" (http/html-get /viewer)
+    "/viewer.sse" /viewer.sse})
 
 (def config
   "Configuration"
@@ -180,7 +209,8 @@
     :routes routes
     :static true
     :public "public"
-    :log true})
+    :log true
+    :sse-chans @[]})
 
 # Main entry point
 (defn main
