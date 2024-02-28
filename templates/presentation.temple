@@ -14,7 +14,7 @@
   <header class="f-row align-items:center">
     <a href="/">home</a>
     <a href="/start">restart</a>
-    <h1>{{ (get-in args [:presentation :title])}}</h1>
+    <h1>{{ (get-in args [:presentation :title]) }}</h1>
     {- (http/page navigation args) -}
   </header>
   <main hx-get="/slide" hx-trigger="refresh from:body" class="f-col align-items:center justify-content:center">

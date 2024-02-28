@@ -103,7 +103,8 @@
   "Show edit form."
   [&]
   (define :view)
-  (http/page app {:content (http/page form {:content (get-in view [:presentation :content])})}))
+  (http/page app {:content (http/page form {:content (get-in view [:presentation :content])
+                                            :message "Edit presentation!"})}))
 
 (defn /start
   "Start presentation"
