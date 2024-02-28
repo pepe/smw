@@ -8,28 +8,6 @@
    (fn [_ state] (put state :store (make Store :image (state :image))))
    :effect (fn [_ state _] (:init (state :store)))})
 
-(define-event InitView
-  "Initializes handlers' view"
-  {:update (fn [_ state]
-             (put state :view
-                  @{:presentation (:load (state :store) :presentation)
-                    :slide 0 :chapter 0
-                    :disabled-previous-slide true
-                    :disabled-next-slide true}))
-   :effect (fn [_ state _] (setdyn *view* (state :view)))})
-
-(defn ^save
-  "Creates event that parses and saves presentation to store and view"
-  [presentation-content]
-  (make-event
-    {:update
-     (fn [_ {:store store :view view}]
-       (def presentation (parse-presentation presentation-content))
-       (:save store presentation :presentation)
-       (put view :presentation presentation))
-     :effect (fn [_ {:store store} _] (:flush store))}
-    "save"))
-
 (define-watch ^refresh-viewer
   "Sends sse with the content of the slide."
   [_ {:view view} _]
@@ -48,6 +26,27 @@
                     :disabled-next-chapter (not ((=> :presentation :chapters (inc chapter)) view))
                     :disabled-previous-chapter (zero? chapter)})))
    :watch ^refresh-viewer})
+
+(define-event InitView
+  "Initializes handlers' view"
+  {:update (fn [_ state]
+             (put state :view
+                  @{:presentation (:load (state :store) :presentation)
+                    :slide 0 :chapter 0}))
+   :watch ^refresh-view
+   :effect (fn [_ state _] (setdyn *view* (state :view)))})
+
+(defn ^save
+  "Creates event that parses and saves presentation to store and view"
+  [presentation-content]
+  (make-event
+    {:update
+     (fn [_ {:store store :view view}]
+       (def presentation (parse-presentation presentation-content))
+       (:save store presentation :presentation)
+       (put view :presentation presentation))
+     :effect (fn [_ {:store store} _] (:flush store))}
+    "save"))
 
 (define-event ^start
   "Sets positions to start"
@@ -123,7 +122,7 @@
   "Show presentation"
   [&]
   (define :view)
-  (http/page presentation view))
+  (http/page presentation (tracev view)))
 
 (defn /next-slide
   "Moves presentation one slide forward"
