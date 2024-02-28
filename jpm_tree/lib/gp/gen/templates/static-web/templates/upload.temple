@@ -1,0 +1,15 @@
+<form action="/__dashboard/process" method="POST" enctype="multipart/form-data">
+  <label>
+    Path to the file
+    <input type="text" name="path" placeholder="Path to the file in the image folder"/>
+  </label>
+  <label for="content">
+    File to upload
+    <input type="file" name="content"/>
+  </label>
+  <div>
+    <input type="submit" value="Save" />
+    <a href="/__dashboard">Cancel</a>
+  </div>
+</form>
+

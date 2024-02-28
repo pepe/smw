@@ -1,0 +1,20 @@
+(use ./environment)
+
+(def manager
+  (make-manager
+    @{:site-title "{- (args `site-title`) -}"
+      :static "static"
+      :logo "logo.svg"
+      :css "css"
+      :img "img"
+      :content "content"
+      :public "public"
+      :templates "templates"
+      :http {:host "0.0.0.0" :port 7777}
+      :executable-name "{- (args " bin ") -}"}))
+
+(defn main
+  "Start working. Argument `env` can be \"dev\" or \"prod\""
+  [_ env]
+  (:transact manager ;(env-init env))
+  (:await manager))

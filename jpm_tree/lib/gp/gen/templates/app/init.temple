@@ -1,0 +1,30 @@
+(use ./environment)
+
+(defn /index
+  "Index page."
+  [req]
+  (http/page app {:content "Hello World!"}))
+
+(def routes
+  "Application routes"
+  @{"/" (http/html-get /index)})
+
+(def config
+  "Configuration"
+  @{:http "{- (args `http`) -}"
+    :routes routes})
+
+(defn main
+  ```
+	Main entry into {- (args "name") -}.
+
+	Initializes manager, transacts HTTP and awaits it.
+  ```
+  [_ &opt runtime]
+  (default runtime @{})
+  (assert (table? runtime))
+  (-> config
+      (merge-into runtime)
+      (make-manager on-error)
+      (:transact HTTP)
+      :await))

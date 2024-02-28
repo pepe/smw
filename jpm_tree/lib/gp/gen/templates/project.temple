@@ -1,0 +1,12 @@
+(declare-project
+  :name "{- (args "name") -}"
+  :author "{- (args "author") -}"
+  :description "{- (args "description") -}"
+  :license "{- (string/ascii-upper (args "license")) -}"
+  :repo "{- (args "repo") -}"
+  :url "{- (or (args "url") (args "repo")) -}"
+  :dependencies [{- (args "dependencies") -}])
+
+{% (when (args "declare-source") %}
+  (declare-source :source ["{- (args "name") -}"])
+{% ) %}

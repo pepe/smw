@@ -1,0 +1,7 @@
+#!/usr/bin/env janet
+
+(import /app)
+
+(defn main [_ &opt env]
+  (default env "dev")
+  (app/main "{- (args " name ") -}" env))

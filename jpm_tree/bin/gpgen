@@ -1,0 +1,44 @@
+#!C:\Users\pp\Code\smw/jpm_tree\bin/janet
+#!/usr/bin/env janet
+
+(import spork/argparse :prefix "")
+(import spork/path)
+(import spork/temple)
+
+(use gp/gen)
+
+(def argp
+  [`gpgen - go code generator.
+
+     Options:
+     new: to generate new app or service with path to the recipe, 
+          and path to config file
+     help: prints the recipe arguments help
+     list-licenses: lists all the licences you can use
+
+     It takes the configuration from the stdin.
+     `
+   :default {:kind :accumulate
+             :help "Command to run with the recipe"}])
+
+(def parsed (argparse ;argp))
+
+(def manager (make-manager))
+
+(defn main [&]
+  (if parsed
+    (match (parsed :default)
+      @["new" recipe & config-file]
+      (let [config (if (empty? config-file)
+                     (:read stdin :all)
+                     (slurp (config-file 0)))
+            recipenv (require recipe)]
+        (:transact manager (set-config (merge (parse config))))
+        (:transact manager (get-in recipenv ['Start :value])))
+      @["help" recipe]
+      (do
+        (def recipe (require recipe))
+        (:transact manager (get-in recipe ['ConfigHelp :value])))
+      @["list-licenses"] (:transact manager ListLicenses)
+      (eprint
+        "Not recognized command. Try to use -h flag to see the help."))))

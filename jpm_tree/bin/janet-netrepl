@@ -1,0 +1,91 @@
+#!C:\Users\pp\Code\smw/jpm_tree\bin/janet
+#!/usr/bin/env janet
+(put root-env :syspath "C:\\Users\\pp\\Code\\smw/jpm_tree\\lib")
+
+(import spork/netrepl)
+(import spork/argparse)
+
+(defn- main
+  [&]
+
+  (def ap
+   (argparse/argparse
+    "Start a networked REPL server"
+
+    :default
+    {:kind :accumulate
+     :help "Files to load into the environment"}
+
+    "host"
+    {:short "H"
+     :help (string "The server host to serve the repl on. Default is " netrepl/default-host)
+     :default netrepl/default-host
+     :kind :option}
+
+    "port"
+    {:short "P"
+     :help (string "The server port to serve the repl on. Default is " netrepl/default-port)
+     :default netrepl/default-port
+     :kind :option}
+
+    "client"
+    {:short "c"
+     :kind :flag
+     :help "Spawn a netrepl client instead of a server"}
+
+    "client-name"
+    {:short "n"
+     :kind :option
+     :help "Set the name of the connecting client"}
+
+    "library"
+    {:short "l"
+     :kind :accumulate
+     :help "Load libraries in the repl as with the janet -l flag"}
+
+    "dofile"
+    {:short "d"
+     :kind :option
+     :help "Pass in a file to evaluate with dofile for each new environment table"}
+
+    "message"
+    {:short "m"
+     :kind :option
+     :help "Specify a short message to show clients on connection"}
+
+    "message-file"
+    {:short "M"
+     :kind :option
+     :help "Specify a file to load as a welcome message for new connections"}
+
+    "single-env"
+    {:short "s"
+     :kind :flag
+     :help "Share a single environment between multiple connections"}))
+
+  # Break on help text
+  (unless ap (break))
+  (def host (ap "host"))
+  (def port (ap "port"))
+  (def dof (ap "dofile"))
+  (def msg (ap "message"))
+  (def msg-file (ap "message-file"))
+  (def files (get ap :default []))
+  (def libraries (get ap "library" []))
+  (defn make-msg
+    [&]
+    (if msg (string msg "\n")
+      (if msg-file (slurp msg-file))))
+  (defn env-make
+    [&]
+    (let [e (make-env)]
+      (each l libraries (merge-module e (require l)))
+      (each f files (merge-module e (dofile f)))
+      (put e :pretty-format "%.20Q")
+      (when dof (dofile dof :env e))
+      e))
+  (if (ap "client")
+    (netrepl/client host port (ap "client-name"))
+    (if (ap "single-env")
+      (netrepl/server-single host port env-make nil make-msg)
+      (netrepl/server host port env-make nil make-msg))))

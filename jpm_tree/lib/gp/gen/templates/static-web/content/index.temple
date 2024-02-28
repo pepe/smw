@@ -1,0 +1,6 @@
+{:author "{- (args "author") -}"
+ :title "{- (args "site-title") -}"
+ :template "/templates/index"}
+---
+
+## Hello!

@@ -1,0 +1,7 @@
+{- `{$ (import /templates/head) (import /templates/foot) $}` -}
+{{ `{- (head/render-dict args) -}` }}
+<main>
+  <h1>{{ `{- (args :title) -}` }}</h1>
+  {{ `{- (args :content) -}` }}
+</main>
+{{ `{- (foot/render-dict args) -}` }}

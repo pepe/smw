@@ -1,0 +1,6 @@
+    <footer>
+			Copyright © {{ ((os/date) :year) }}
+    </footer>
+  </body>
+</html>
+

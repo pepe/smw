@@ -1,0 +1,11 @@
+{- `{% (def fnm (args :file-name)) (def new? (= fnm "new-file.mdz")) %}` -}
+<form style="width: 60rem" action="/__dashboard/save" method="POST" class="f-col">
+  <textarea name="file-content" cols="80" rows="20">{% (prin `{- (args :file-content) -}`) %}</textarea>
+  {% (prin ```{- (if new? `<label for="name">File name</label>`) -}```) %}
+  <input type={% (prin ```{- (if new? (string `"text" placeholder="` fnm `"`) `"hidden"`) -}```) %}
+    name="file-name" value="{{ `{- (unless new? fnm) -}` }}"/>
+  <div class="f-row">
+    <input type="submit" value="Save"/>
+    <a href="/__dashboard">Cancel</a>
+  </div>
+</form>

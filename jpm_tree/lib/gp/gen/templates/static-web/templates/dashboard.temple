@@ -1,0 +1,31 @@
+<h2>Content files</h2>
+<div class="f-row">
+  <form action="/__dashboard/render" method="POST">
+    <input type="hidden" name="file" value="all"/>
+    <button>Render all</button>
+  </form>
+  <a class="button" href="/__dashboard/edit?file=new-file.mdz">New file</a>
+</div>
+<ul>
+  {- `{% (loop [f :in (get-in args [:files :content])
+	         :let [vf (->> f
+                      (string/replace "content" "")
+                      (string/replace "mdz" "html"))]] %}` -}
+  <li class="f-col">
+    {- `{{ f }}` -}
+    <form action="/__dashboard/render" method="POST">
+      <input type="hidden" name="file" value="{{ `{- f -}` }}"/>
+      <button>Render</button>
+    </form>
+    <a href="{{ `{- vf -}` }}">View</a>
+    <a href="/__dashboard/edit?file={{ `{- f -}` }}">Edit</a>
+  </li>
+  {- `{% ) %}` -}
+</ul>
+<h2>Static files </h2>
+<ul>
+  {{ `{% (loop [f :in (get-in args [:files :css])] %}` }}
+  <li>{- `{{ f }}` -}</li>
+  {{ `{% ) %}` }}
+</ul>
+

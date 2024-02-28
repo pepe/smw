@@ -1,0 +1,9 @@
+# Add some test
+(use spork/test)
+(use /{- (args "name") -})
+
+(start-suite 0)
+
+(assert false "fix me")
+
+(end-suite)

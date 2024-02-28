@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{- `{{ (args :title) }}` -}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.1/dist/missing.css">
+    {{ `{% (each l (reverse (args :css)) %}` }}
+      <link rel="stylesheet" href="/{- `{{ l }}` -}" />
+    {{ `{% )%}` }}
+  </head>
+  <body>
+    <header class="navbar">
+      <a href="/">
+        <img src="/logo.svg" />
+      </a>
+      <h1>{- `{{ (args :site-title) }}` -}</h1>
+      {{ `{% (when (args :dev) %}` }}
+      <div>
+        <a href="/__dashboard/edit?file={{ `{- (args :current-file) -}` }}">Edit</a>
+        <a href="/__dashboard">Dashboard</a>
+      </div>
+      {{ `{% ) %}` }}
+    </header>

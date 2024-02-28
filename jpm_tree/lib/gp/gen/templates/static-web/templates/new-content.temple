@@ -1,0 +1,7 @@
+{:author "{- (args "author") -}"
+ :title "New page"
+ :template "/templates/index"}
+---
+
+# New page
+
