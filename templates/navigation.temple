@@ -2,8 +2,8 @@
 <nav class="f-row" hx-get="/navigation" hx-trigger="refresh from:body">
   <button class="iconbutton" hx-get="/previous-slide" hx-swap="none" {- (if (args :disabled-previous-slide) "disabled") -}>&larr;</button>
   <button class="iconbutton" hx-get="/next-slide" hx-swap="none" {- (if (args :disabled-next-slide) "disabled") -}>→</button>
-  <button hx-get="/previous-chapter" hx-swap="none" {- (if (args :disabled-previous-chapter) "disabled") -}>previous chapter</button>
-  <button hx-get="/next-chapter" hx-swap="none" {- (if (args :disabled-next-chapter) "disabled") -}>next chapter</button>
+  <button class="iconbutton" hx-get="/previous-chapter" hx-swap="none" {- (if (args :disabled-previous-chapter) "disabled") -}>↞</button>
+  <button class="iconbutton" hx-get="/next-chapter" hx-swap="none" {- (if (args :disabled-next-chapter) "disabled") -}>↠</button>
   <span>chapter: {{ (get-in args [:presentation :chapters (args :chapter) :title]) }}</span>
   <span>slide: {{ (inc (args :slide)) }}</span>
 </nav>
