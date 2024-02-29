@@ -1,6 +1,6 @@
 (declare-project
   :name "smw"
-  :author "Josef Pospíšil <josef.pospisil@laststar.eu>"
+  :author "Kundan Verma <josef.pospisil@laststar.eu>"
   :description "See my work"
   :license "MIT"
   :repo "https://git.sr.ht/~pepe/smw"
