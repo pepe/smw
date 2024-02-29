@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>smw</title>
+    <title>एस एम डब्ल्यू</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.1/dist/missing.css">
@@ -13,12 +13,12 @@
   <header class="navbar">
     <span class="f-row">
       <a class="brand" href="/" aria-label="Home">
-        <h1>smw</h1>
+        <h1>एस एम डब्ल्यू</h1>
       </a>
     </span>
   </header>
   {- (args :content) -}
-  <footer>smw</footer>
+  <footer>एस एम डब्ल्यू</footer>
   <script src="/htmx.min.js"></script>
   </body>
 </html>
