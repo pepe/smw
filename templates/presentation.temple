@@ -12,8 +12,8 @@
   </head>
   <body>
   <header class="f-row align-items:center">
-    <a href="/">home</a>
-    <a href="/start">restart</a>
+    <a href="/">domů</a>
+    <a href="/start">restartovat</a>
     <h1>{{ (get-in args [:presentation :title]) }}</h1>
     {- (http/page navigation args) -}
   </header>

@@ -82,12 +82,12 @@
   [:main
    [:h1 (presentation :title)]
    [:section
-    [:h1 "Chapters"]
+    [:h1 "Kapitoly"]
     (seq [chapter :in (presentation :chapters)]
       [:p
        [:h3 (chapter :title)]
-       [:span (length (chapter :slides)) " slides"]])]
-   [:nav {:class "f-row"} [:a {:href "/edit"} "edit"] [:a {:href "/start"} "start"]]])
+       [:span (length (chapter :slides)) " slajdy"]])]
+   [:nav {:class "f-row"} [:a {:href "/edit"} "editovat"] [:a {:href "/start"} "start"]]])
 
 # Handlers
 (defn /index
@@ -110,7 +110,7 @@
   [&]
   (define :view)
   (http/page app {:content (http/page form {:content (get-in view [:presentation :content])
-                                            :message "Edit presentation!"})}))
+                                            :message "Editace prezentace!"})}))
 
 (defn /start
   "Start presentation"
