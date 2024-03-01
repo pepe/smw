@@ -4,6 +4,6 @@
   <button class="iconbutton" hx-get="/next-slide" hx-swap="none" {- (if (args :disabled-next-slide) "disabled") -}>→</button>
   <button class="iconbutton" hx-get="/previous-chapter" hx-swap="none" {- (if (args :disabled-previous-chapter) "disabled") -}>↞</button>
   <button class="iconbutton" hx-get="/next-chapter" hx-swap="none" {- (if (args :disabled-next-chapter) "disabled") -}>↠</button>
-  <span>kapitola: {{ (get-in args [:presentation :chapters (args :chapter) :title]) }}</span>
-  <span>slajd: {{ (inc (args :slide)) }}</span>
+  <span>પ્રકરણ: {{ (get-in args [:presentation :chapters (args :chapter) :title]) }}</span>
+  <span>સ્લાઇડ: {{ (inc (args :slide)) }}</span>
 </nav>
