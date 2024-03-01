@@ -82,12 +82,12 @@
   [:main
    [:h1 (presentation :title)]
    [:section
-    [:h1 "Kapitoly"]
+    [:h1 "પ્રકરણો"]
     (seq [chapter :in (presentation :chapters)]
       [:p
        [:h3 (chapter :title)]
-       [:span (length (chapter :slides)) " slajdy"]])]
-   [:nav {:class "f-row"} [:a {:href "/edit"} "editovat"] [:a {:href "/start"} "start"]]])
+       [:span (length (chapter :slides)) " સ્લાઇડ્સ"]])]
+   [:nav {:class "f-row"} [:a {:href "/edit"} "ફેરફાર કરવા માટે"] [:a {:href "/start"} "start"]]])
 
 # Handlers
 (defn /index
@@ -110,7 +110,7 @@
   [&]
   (define :view)
   (http/page app {:content (http/page form {:content (get-in view [:presentation :content])
-                                            :message "Editace prezentace!"})}))
+                                            :message "પ્રસ્તુતિ સંપાદિત કરી રહ્યાં છીએ!"})}))
 
 (defn /start
   "Start presentation"

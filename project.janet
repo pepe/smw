@@ -1,6 +1,6 @@
 (declare-project
   :name "smw"
-  :author "Josef Pospíšil <josef.pospisil@laststar.eu>"
+  :author "Trupeshkumar Patel <trupesh.k.patel@gmail.com>"
   :description "See my work"
   :license "MIT"
   :repo "https://git.sr.ht/~pepe/smw"
