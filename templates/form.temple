@@ -1,7 +1,7 @@
 <main>
-	<h1>{- (if (args :message) (args :message) "Vytvořte svojí prezentaci, prosím!") -}</h1>
+	<h1>{- (if (args :message) (args :message) "कृपया अपनी प्रस्तुति बनाएं!") -}</h1>
 	<form action="/" method="POST">
 		<textarea name="presentation">{- (args :content) -}</textarea>
-		<button>Ulož!</button>
+		<button>बचाना!</button>
 	</form>
 </main>
